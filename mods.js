@@ -111,7 +111,7 @@ modClasses = [
     ,
     class Mod_DisableTX extends FirmwareMod {
         constructor() {
-            super("Disable TX Lock from 50-850 MHz", "Enables transmitting on frequencies from 50 MHz to 850 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause heavy interference!!!", 0);
+            super("Disable TX Lock from 50-850 MHz", "Enables transmitting on frequencies from 50 MHz to 850 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!!!", 0);
         }
 
         apply(firmwareData) {
@@ -128,7 +128,7 @@ modClasses = [
 
             return firmwareData;
         }
-    }
+    }//just a quick edit... from tx-lock on all freq.
     ,
     class Mod_DoubleBacklightDuration extends FirmwareMod {
         constructor() {
