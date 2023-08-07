@@ -1,4 +1,5 @@
-# [CLICK HERE TO OPEN UVMOD](https://re3con.github.io/uvmod/)
+# [CLICK HERE TO OPEN UVMOD RX-TX](https://re3con.github.io/uvmod/)
+# [Original Version by whosmatt](https://github.com/whosmatt/uvmod)
 ## [中文版 Open Chinese Version (maintained independently)](https://uvmod.xanyi.eu.org/)
 
 ## Introduction
@@ -19,3 +20,5 @@ The supported format for binary data is in the format of a hex string __without 
 ## **Comming soon** 
 Offline universal firmware version patcher
 based on search and replace pattern to change and modificate with precission the functions of these patches direct on all firmware versions and upcoming versions files.
+
+*Credits and many thanks to whosmatt!*
