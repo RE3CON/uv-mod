@@ -41,7 +41,8 @@ modClasses = [
 
                 const txHex = new Uint8Array(buffer);
 
-                firmwareData = replaceSection(firmwareData, txHex, offset, offset2);
+                firmwareData = replaceSection(firmwareData, txHex, offset);
+                firmwareData = replaceSection(firmwareData, txHex, offset2);
                 log(`Success: ${this.name}.`);
             }
             else {
