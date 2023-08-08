@@ -3,7 +3,7 @@
 ## [中文版 Open Chinese Version (maintained independently)](https://uvmod.xanyi.eu.org/)
 # [UVMOD in russian language project](https://uvmod.valek.net.ru/)
 
-[Discussion forum 4PDA](https://4pda.to/forum/index.php?showtopic=1071343&st=0) | [Group in Telegram](https://t.me/uv_k5/34434)
+[Discussion forum 4PDA](https://4pda.to/forum/index.php?showtopic=1071343&st=0) | [Group in Telegram](https://t.me/uv_k5/34434) | [Chinese Mod collection](https://www.zhihu.com/people/troilusxi)
 
 ## Introduction
 
