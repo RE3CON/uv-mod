@@ -1,17 +1,33 @@
 modClasses = [
-    class Mod_Example extends FirmwareMod {
+    class Mod_ChangeTXLimits extends FirmwareMod {
         constructor() {
-            super("Example Mod", "This mod does absolutely nothing and is used as an example for implementing new mods", 0); // Add name, description and size (additional flash used, 0 for most mods)
-
-            // Customize the mod-specific div with input elements
-            // There is a helper function for adding input fields easily:
-            this.inputField1 = addInputField(this.modSpecificDiv, "Example Mod specific input field 1", "Editable data");
+            super("Expand TX limits", "Allows transmission on the specified frequency range.", 0);
+            this.inputMinTX = addInputField(this.modSpecificDiv, "Specify a new value for the minimum frequency in the range 18-1300 MHz:", "50");
+            this.inputMaxTX = addInputField(this.modSpecificDiv, "Specify a new value for the maximum frequency in the range 18-1300 MHz:", "600");
         }
 
         apply(firmwareData) {
-            log("The value of input field 1 is: " + this.inputField1.value);
-            // Implement the logic to apply the specific mod here
-            // You can use the mod-specific inputs in this.modSpecificDiv
+            const offset = 0x150c;
+            const txStart = parseInt(this.inputMinTX.value) * 100000;
+            const txStop = parseInt(this.inputMaxTX.value) * 100000;
+
+            if ((txStart <= txStop) && (txStart >= 1800000) && (txStart <= 130000000) && (txStop >= 1800000) && (txStop <= 130000000)) {
+
+                const buffer = new ArrayBuffer(8);
+                const dataView = new DataView(buffer);
+
+                dataView.setUint32(0, txStart, true);
+                dataView.setUint32(4, txStop, true);
+
+                const txHex = new Uint8Array(buffer);
+
+                firmwareData = replaceSection(firmwareData, txHex, offset);
+                log(`Success: ${this.name}.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Incorrect data! The frequencies must be greater than 18 MHz and less than 1300 MHz, the maximum is greater or equal to the minimum.`);
+            }
+
             return firmwareData;
         }
     }
