@@ -55,7 +55,7 @@ modClasses = [
     ,
     class Mod_BatteryIcon extends FirmwareMod {
         constructor() {
-            super("Battery icon", "Changes the battery icon to a more normal looking variant.", 0);
+            super("Battery icon", "Changes the battery icon to a more modern look.", 0);
         }
 
         apply(firmwareData) {
@@ -102,8 +102,8 @@ modClasses = [
         constructor() {
             super("Font", "Changes the font to one of the following custom fonts: ", 0);
 
-            this.selectVCR = addRadioButton(this.modSpecificDiv, "VCR Font, replaces big digits", "selectVCR", "selectFont");
-            this.selectFuturistic = addRadioButton(this.modSpecificDiv, "Futuristic Font (by DO7OO), replaces big and small digits", "selectFuturistic", "selectFont");
+            this.selectVCR = addRadioButton(this.modSpecificDiv, "VCR Font, replace the bold digits with bigger fount.", "selectVCR", "selectFont");
+            this.selectFuturistic = addRadioButton(this.modSpecificDiv, "Futuristic Font (by DO7OO), replaces bold and small digits", "selectFuturistic", "selectFont");
             this.selectVCR.checked = true;
 
         }
@@ -127,7 +127,7 @@ modClasses = [
     ,
     class Mod_FreqCopyTimeout extends FirmwareMod {
         constructor() {
-            super("Disable Freq Copy Timeout", "Prevents freq copy and CTCSS decoder from timing out with \"SCAN FAIL\", allowing both functions to run indefinitely until a signal is found.", 0);
+            super("Disable Freq Copy Timeout", "Prevents freq copy and CTCSS decoder from timeout with \"SCAN FAIL\", allowing both functions to run indefinitely until a signal is found.", 0);
         }
 
         apply(firmwareData) {
@@ -148,7 +148,7 @@ modClasses = [
     ,
     class Mod_DoubleBacklightDuration extends FirmwareMod {
         constructor() {
-            super("Double Backlight Duration", "Always multiplies the backlight duration set on the radio by 2. A set value of 5 would then corresponds to 10 seconds of backlight.", 0);
+            super("Double Backlight Duration", "Always multiplies the backlight duration set on the radio by 2. A value of 5 results to increase the light to 10 seconds.", 0);
         }
 
         apply(firmwareData) {
@@ -169,7 +169,7 @@ modClasses = [
     ,
     class Mod_SkipBootscreen extends FirmwareMod {
         constructor() {
-            super("Skip Bootscreen", "Skips the bootscreen and instantly goes to the main screen on powerup.", 0);
+            super("Skip Bootscreen", "Skips the bootscreen and instantly goes to the main screen by power on.", 0);
         }
 
         apply(firmwareData) {
@@ -190,7 +190,7 @@ modClasses = [
     ,
     class Mod_MenuStrings extends FirmwareMod {
         constructor() {
-            super("Menu strings", "Changes text in the settings menu. The displayed JSON contains every string with offset, description and size. Only edit the string and dont use more characters than allowed by the size.", 0);
+            super("Menu strings", "Changes text in the settings menu. The displayed JSON contains every string with offset, description and size. Only edit the string do not insert more characters as allowed by the fixed size value!", 0);
 
             // the  b l o c k
             const strings = [{ "offset": 56470, "description": "squelch", "size": 6, "string": "SQLCH" }, { "offset": 56477, "description": "step", "size": 6, "string": "STEP" }, { "offset": 56484, "description": "txpower", "size": 6, "string": "TXPWR" }, { "offset": 56491, "description": "r dcs", "size": 6, "string": "R_DCS" },
@@ -255,7 +255,7 @@ modClasses = [
     ,
     class Mod_MicGain extends FirmwareMod {
         constructor() {
-            super("Increase Mic Gain", "makes the microphone more sensitive. You can hold it more far away to speak but background sound get also louder. It does not gain the maximum mic volume. You can still fine tune the mic gain in the menu but it will always increase the sensitivity than without this mod.", 0);
+            super("Increase Mic sensitivity Gain", "makes the microphone more sensitive. You can hold it more far away to speak but background sound will be also louder. It does not gain the maximum mic volume. You can still fine tune the mic gain in the menu but it will always increase the sensitivity as without this mod.", 0);
         }
 
         apply(firmwareData) {
@@ -279,7 +279,7 @@ modClasses = [
     ,
     class Mod_NegativeDisplay extends FirmwareMod {
         constructor() {
-            super("Negative Display", "Inverts the colors on the display.", 0);
+            super("Negative Display", "Inverts the LCD display apperiance.", 0);
         }
 
         apply(firmwareData) {
@@ -300,7 +300,7 @@ modClasses = [
     ,
     class Mod_RogerBeep extends FirmwareMod {
         constructor() {
-            super("Roger Beep", "Changes the sound of the two roger beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. 1050 Hz can be used to open NOAA Ton-Squelch", 0);
+            super("Roger Beep", "Changes the sound of the two roger beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. 1050 Hz as Ton 1 can be used to open NOAA Ton-Squelch", 0);
             this.inputTone1 = addInputField(this.modSpecificDiv, "Tone 1 frequency (Hz)", "1540");
             this.inputTone2 = addInputField(this.modSpecificDiv, "Tone 2 frequency (Hz)", "1310");
         }
@@ -338,7 +338,7 @@ modClasses = [
     ,
     class Mod_RSSI extends FirmwareMod {
         constructor() {
-            super("RSSI", "Experimental mod. Adds a battery voltage readout in the status bar. Replaces the signal strength meter with a numerical RSSI readout and adds another optional element: You can choose to either have an s-meter with bargraph (signal strength in 6dB increments) or an RSSI graph showing RSSI over time.", "2250 or 1424");
+            super("RSSI", "Experimental mod. Adds a battery voltage readout in the status bar. Replaces the signal strength meter with a numerical RSSI readout and adds another optional element: You can choose to either have an S-Meter with bargraph (signal strength in 6dB increments) or an RSSI graph showing RSSI over time.", "2250 or 1424");
 
             this.selectSbar = addRadioButton(this.modSpecificDiv, "Select S-Meter, uses 2250 Bytes of additional Flash", "selectSbar", "selectRSSI");
             this.selectGraph = addRadioButton(this.modSpecificDiv, "Select RSSI Graph, uses 1424 Bytes of additional Flash CURRENTLY BROKEN", "selectGraph", "selectRSSI");
@@ -375,7 +375,7 @@ modClasses = [
     ,
     class Mod_EnableSWDPort extends FirmwareMod {
         constructor() {
-            super("Enable SWD Port", "If you don't know what SWD is, you don't need this mod! Allows debugging via SWD. You will need to solder wires to the main board of the radio and connect them to specialized hardware. ", 0);
+            super("Enable SWD Port", "If you don't know what SWD is, you don't need this! Allows debugging via SWD. You will need to solder wires to the main board of the radio and connect them to specialized hardware. ", 0);
         }
 
         apply(firmwareData) {
@@ -465,7 +465,7 @@ modClasses = [
     ,
     class Mod_NOAAFrequencies extends FirmwareMod {
         constructor() {
-            super("NOAA Frequencies", "The NOAA scan feature is unique because it can scan in the background, all the time and stop only if a 1050 Hz Ton received to demute the speaker. However, most people dont need the weather alerts or dont have NOAA in their country. This mod lets you change the frequencies so you can use the NOAA scan function for something else. The values below are pre-set to the first 10 PMR446 channels. A 1050 Hz Ton >150ms can be send with the Roggerbeep mod", 0);
+            super("NOAA Frequencies", "The NOAA scan feature is unique because it can scan in the background, all the time and stop only if a 1050 Hz Ton received to demute the speaker. However most people dont need the weather alerts or dont have NOAA in their country. This mod lets you change the frequencies so you can use the NOAA scan function for something else. The values below are pre-set to the first 10 PMR446 channels. A 1050 Hz Ton >150ms can be send with the Rogger Beep mod", 0);
             this.inputFreq1 = addInputField(this.modSpecificDiv,   "Frequency 1 (Hz)", "446006250");
             this.inputFreq2 = addInputField(this.modSpecificDiv,   "Frequency 2 (Hz)", "446018750");
             this.inputFreq3 = addInputField(this.modSpecificDiv,   "Frequency 3 (Hz)", "446031250");
