@@ -1,6 +1,9 @@
 # [CLICK HERE TO OPEN UVMOD RX-TX](https://re3con.github.io/uvmod/)
 # [Original Version by whosmatt](https://github.com/whosmatt/uvmod)
 ## [中文版 Open Chinese Version (maintained independently)](https://uvmod.xanyi.eu.org/)
+# [UVMOD in russian language project](https://uvmod.valek.net.ru/)
+
+[Discussion forum 4PDA](https://4pda.to/forum/index.php?showtopic=1071343&st=0)
 
 ## Introduction
 
