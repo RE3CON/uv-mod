@@ -32,6 +32,27 @@ modClasses = [
         }
     }
     ,
+    class Mod_DisableTX extends FirmwareMod {
+        constructor() {
+            super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!!!", 0);
+        }
+
+        apply(firmwareData) {
+            const offset = 0x180e;
+            const oldData = hexString("cf2a");
+            const newData = hexString("5de0");
+            if (compareSection(firmwareData, oldData, offset)) {
+                firmwareData = replaceSection(firmwareData, newData, offset);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+
+            return firmwareData;
+        }
+    }//just a quick edit... from tx-lock on all freq.
+    ,
     class Mod_BatteryIcon extends FirmwareMod {
         constructor() {
             super("Battery icon", "Changes the battery icon to a more normal looking variant.", 0);
@@ -124,27 +145,6 @@ modClasses = [
             return firmwareData;
         }
     }
-    ,
-    class Mod_DisableTX extends FirmwareMod {
-        constructor() {
-            super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!!!", 0);
-        }
-
-        apply(firmwareData) {
-            const offset = 0x180e;
-            const oldData = hexString("cf2a");
-            const newData = hexString("5de0");
-            if (compareSection(firmwareData, oldData, offset)) {
-                firmwareData = replaceSection(firmwareData, newData, offset);
-                log(`Success: ${this.name} applied.`);
-            }
-            else {
-                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
-            }
-
-            return firmwareData;
-        }
-    }//just a quick edit... from tx-lock on all freq.
     ,
     class Mod_DoubleBacklightDuration extends FirmwareMod {
         constructor() {
