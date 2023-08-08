@@ -1,7 +1,7 @@
 modClasses = [
     class Mod_ChangeTXLimits extends FirmwareMod {
         constructor() {
-            super("Expand TX limits", "Allows transmission on the specified frequency range.", 0);
+            super("Expand TX limits", "Allows transmission on the specified frequency range. Harmonic wave radiation TX PWR can be stronger than the on the input frequency. It may cause severe interference! Check your local law rules!", 0);
             this.inputMinTX = addInputField(this.modSpecificDiv, "Specify a new value for the minimum frequency in the range 18-1300 MHz:", "50");
             this.inputMaxTX = addInputField(this.modSpecificDiv, "Specify a new value for the maximum frequency in the range 18-1300 MHz:", "600");
         }
