@@ -22,6 +22,8 @@ The supported format for binary data is in the format of a hex string __without 
 
 ## **Comming soon** 
 Offline universal firmware version patcher
-based on search and replace pattern to change and modificate with precission the functions of these patches direct on all firmware versions and upcoming versions files.
+based on search and replace pattern to change and modificate with precission the functions of these patches direct on all firmware versions and upcoming versions files.<br>
+
+I'll take in account EU Country block on DNS domain cause of different law regulations in whosmatt location. 
 
 *Credits and many thanks to whosmatt!*
