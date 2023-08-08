@@ -102,8 +102,8 @@ modClasses = [
         constructor() {
             super("Font", "Changes the font to one of the following custom fonts: ", 0);
 
-            this.selectVCR = addRadioButton(this.modSpecificDiv, "VCR Font, replace the bold digits with bigger fount.", "selectVCR", "selectFont");
-            this.selectFuturistic = addRadioButton(this.modSpecificDiv, "Futuristic Font (by DO7OO), replaces bold and small digits", "selectFuturistic", "selectFont");
+            this.selectVCR = addRadioButton(this.modSpecificDiv, "VCR Font, replace the bold digits with bigger size fonts.", "selectVCR", "selectFont");
+            this.selectFuturistic = addRadioButton(this.modSpecificDiv, "Futuristic Font (by DO7OO), replaces bold and small digits in a futuristic look.", "selectFuturistic", "selectFont");
             this.selectVCR.checked = true;
 
         }
@@ -300,7 +300,7 @@ modClasses = [
     ,
     class Mod_RogerBeep extends FirmwareMod {
         constructor() {
-            super("Roger Beep", "Changes the sound of the two roger beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. 1050 Hz as Ton 1 can be used to open NOAA Ton-Squelch", 0);
+            super("Roger Beep", "Changes the sound of the two Roger Beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. 1050 Hz as Ton 1 can be used to open NOAA Ton-Squelch", 0);
             this.inputTone1 = addInputField(this.modSpecificDiv, "Tone 1 frequency (Hz)", "1540");
             this.inputTone2 = addInputField(this.modSpecificDiv, "Tone 2 frequency (Hz)", "1310");
         }
