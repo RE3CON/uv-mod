@@ -24,6 +24,6 @@ The supported format for binary data is in the format of a hex string __without 
 Offline universal firmware version patcher
 based on search and replace pattern to change and modificate with precission the functions of these patches direct on all firmware versions and upcoming versions files.<br>
 
-I'll take in account EU Country block on DNS domain cause of different law regulations in whosmatt location. 
+"I'll take in account an EU Country block on DNS domain cause of different law regulations in whosmatt location. He threatens me with DCMA, a taboo that's absolutely frowned upon among open source coding communities. An absolutly No-Go by doing shared code works. Sadly he's afraid from TX mods and freq limits >999MHz now he desided to copie my TX unlock code without paying propper credits."
 
 *Credits and many thanks to whosmatt!*
