@@ -18,7 +18,7 @@ modClasses = [
     }
     ,
 */
-/*   class Mod_ChangeTXLimits extends FirmwareMod {
+/*   class Mod_ChangeTXLimits extends FirmwareMod {  //custom freq steps offsets + hex strings old + new
         constructor() {
             super("Expand TX limits", "Allows transmission on the specified frequency range. Harmonic wave radiation TX PWR can be stronger than the on the input frequency. It may cause severe interference! Check your local law rules!", 0);
             this.inputMinTX = addInputField(this.modSpecificDiv, "Specify a new value for the minimum frequency in the range 18-1300 MHz:", "50");
@@ -26,8 +26,11 @@ modClasses = [
         }
 
         apply(firmwareData) {
-            const offset = 0x150c;
-            const offset2 = 0x1510; // replace 2 strings
+            const offset =  0xE090 oldData 80f77300f684cf00 newData 7fcba400f684cf00 //customFreq 
+            const offset2 = 0x150D oldData 771b0080a4bf077c newData 4b4c00008793037c  // 
+                  offset3 = 0xE0A8 oldData 00879303a02e6300 newData 80a4bf07a02e6300
+          
+            
             const txStart = parseInt(this.inputMinTX.value) * 100000;
             const txStop = parseInt(this.inputMaxTX.value) * 100000;
 
