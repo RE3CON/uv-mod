@@ -125,9 +125,9 @@ modClasses = [
     ,
     class Mod_Font extends FirmwareMod {
         constructor() {
-            super("Font", "Changes the font to one of the following custom fonts: ", 0);
+            super("Font", "Changes the font apperiance on LCD to one of the following custom fonts: ", 0);
 
-            this.selectVCR = addRadioButton(this.modSpecificDiv, "VCR Font, replace the bold digits with bigger size fonts.", "selectVCR", "selectFont");
+            this.selectVCR = addRadioButton(this.modSpecificDiv, "VCR Font, replace the bold digits with bigger, a bit higher in size fonts.", "selectVCR", "selectFont");
             this.selectFuturistic = addRadioButton(this.modSpecificDiv, "Futuristic Font (by DO7OO), replaces bold and small digits in a futuristic look.", "selectFuturistic", "selectFont");
             this.selectVCR.checked = true;
 
@@ -173,7 +173,7 @@ modClasses = [
     ,
     class Mod_DoubleBacklightDuration extends FirmwareMod {
         constructor() {
-            super("Double Backlight Duration", "Always multiplies the backlight duration set on the radio by 2. A value of 5 results to increase the light to 10 seconds.", 0);
+            super("Double Backlight Duration", "Always multiplies the backlight duration set on the radio by x2. A value of 5 results to increase the light to 10 seconds.", 0);
         }
 
         apply(firmwareData) {
@@ -194,7 +194,7 @@ modClasses = [
     ,
     class Mod_SkipBootscreen extends FirmwareMod {
         constructor() {
-            super("Skip Bootscreen", "Skips the bootscreen and instantly goes to the main screen by power on.", 0);
+            super("Skip Bootscreen", "Skips the bootscreen and instantly goes to the LCD main screen by power on.", 0);
         }
 
         apply(firmwareData) {
@@ -215,7 +215,7 @@ modClasses = [
     ,
     class Mod_MenuStrings extends FirmwareMod {
         constructor() {
-            super("Menu strings", "Changes text in the settings menu. The displayed JSON contains every string with offset, description and size. Only edit the string do not insert more characters as allowed by the fixed size value!", 0);
+            super("Menu strings", "Changes text in the settings menu. The displayed JSON contains every string with offset, description and size. Only edit the string. Do not insert more characters as allowed by the fixed size value!", 0);
 
             // the  b l o c k
             const strings = [{ "offset": 56470, "description": "squelch", "size": 6, "string": "SQLCH" }, { "offset": 56477, "description": "step", "size": 6, "string": "STEP" }, { "offset": 56484, "description": "txpower", "size": 6, "string": "TXPWR" }, { "offset": 56491, "description": "r dcs", "size": 6, "string": "R_DCS" },
@@ -325,7 +325,7 @@ modClasses = [
     ,
     class Mod_RogerBeep extends FirmwareMod {
         constructor() {
-            super("Roger Beep", "Changes the sound of the two Roger Beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. 1050 Hz as Ton 1 can be used to open NOAA Ton-Squelch", 0);
+            super("Roger Beep", "Changes the sound of the two Roger Beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. To open NOAA Ton-Squelch set 1050 Hz as Ton 1", 0);
             this.inputTone1 = addInputField(this.modSpecificDiv, "Tone 1 frequency (Hz)", "1540");
             this.inputTone2 = addInputField(this.modSpecificDiv, "Tone 2 frequency (Hz)", "1310");
         }
