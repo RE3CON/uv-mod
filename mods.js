@@ -68,10 +68,10 @@ modClasses = [
             const offset3 = 0xe0a8;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
             const oldData1 = hexString("cf2a");  //TX lock
             const oldData2 = hexString("80cba4"); // lower limit 50
-            const oldData3 = hexString("00879303");// upper limit 600
-            const newData1 = hexString("5de0");//unlock TX 50-600  conv. by R3CON
-            const newData2 = hexString("40771b");//set lower freq to 18  conv. by R3CON
-            const newData3 = hexString("80a4bf07");//set upper freq to 1300  conv. by R3CON 
+            const oldData3 = hexString("00879303"); // upper limit 600
+            const newData1 = hexString("5de0"); //unlock TX 50-600 by R3CON
+            const newData2 = hexString("40771b"); //set lower freq to 18 by R3CON
+            const newData3 = hexString("80a4bf07"); //set upper freq to 1300 by R3CON 
             if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3)) {
                 firmwareData = replaceSection(firmwareData, newData1, offset1);
                 firmwareData = replaceSection(firmwareData, newData2, offset2);
