@@ -56,7 +56,36 @@ modClasses = [
         }
     }
     , 
- */  
+ */ 
+  class Mod_TXOnAllBands extends FirmwareMod {
+        constructor() {
+            super("TX on all Bands from 18-1300MHz", "Allows transmission on the frequency range from 18 MHz - 1300 MHz.", 0);
+        }
+//Pay propper credits! This mod TX 18-1300MHz coded by RE3CON based on Tunas1337 mod
+        apply(firmwareData) {
+            const offset1 = 0x180E;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
+            const offset2 = 0xe078;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
+            const offset3 = 0xe0a8;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
+            const oldData1 = hexString("cf2a");  //TX lock
+            const oldData2 = hexString("80cba4"); // lower limit 50
+            const oldData3 = hexString("00879303");// upper limit 600
+            const newData1 = hexString("5de0");//unlock TX 50-600  conv. by R3CON
+            const newData2 = hexString("40771b");//set lower freq to 18  conv. by R3CON
+            const newData3 = hexString("80a4bf07");//set upper freq to 1300  conv. by R3CON 
+            if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3)) {
+                firmwareData = replaceSection(firmwareData, newData1, offset1);
+                firmwareData = replaceSection(firmwareData, newData2, offset2);
+                firmwareData = replaceSection(firmwareData, newData3, offset3);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+
+            return firmwareData;
+        }
+    }
+    ,  //end credits by RE3CON
     class Mod_DisableTX extends FirmwareMod {
         constructor() {
             super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!!!", 0);
