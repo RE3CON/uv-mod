@@ -18,7 +18,7 @@ modClasses = [
     }
     ,
 */
-/*   class Mod_ChangeTXLimits extends FirmwareMod {  //custom freq steps offsets + hex strings old + new
+/*   class Mod_ChangeRXLimits extends FirmwareMod {  //custom freq steps offsets + hex strings old + new
         constructor() {
             super("Expand TX limits", "Allows transmission on the specified frequency range. Harmonic wave radiation TX PWR can be stronger than the on the input frequency. It may cause severe interference! Check your local law rules!", 0);
             this.inputMinTX = addInputField(this.modSpecificDiv, "Specify a new value for the minimum frequency in the range 18-1300 MHz:", "50");
@@ -57,19 +57,19 @@ modClasses = [
     }
     , 
  */ 
-  class Mod_TXOnAllBands extends FirmwareMod {
+  class Mod_RXOnAllBands extends FirmwareMod {
         constructor() {
-            super("TX on all Bands from 18-1300MHz", "Allows transmission on the frequency range from 18 MHz - 1300 MHz.", 0);
+            super("RX on all Bands from 18-1300MHz", "Allows recieve RX on the frequency range from 18 MHz - 1300 MHz.", 0);
         }
-//Pay propper credits! This mod TX 18-1300MHz coded by RE3CON based on Tunas1337 mod
+//Pay propper credits! This mod RX 18-1300MHz coded by RE3CON based on Tunas1337 mod
         apply(firmwareData) {
             const offset1 = 0x180E;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
             const offset2 = 0xe078;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
             const offset3 = 0xe0a8;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
-            const oldData1 = hexString("cf2a");  //TX lock
-            const oldData2 = hexString("80cba4"); // lower limit 50
-            const oldData3 = hexString("00879303"); // upper limit 600
-            const newData1 = hexString("5de0"); //unlock TX 50-600 by R3CON
+         /*   const oldData1 = hexString("cf2a");  //TX lock */
+            const oldData2 = hexString("80cba4"); // lower limit 50 lock
+            const oldData3 = hexString("00879303"); // upper limit 600 lock
+         /*   const newData1 = hexString("5de0"); //unlock TX 50-600 by R3CON */
             const newData2 = hexString("40771b"); //set lower freq to 18 by R3CON
             const newData3 = hexString("80a4bf07"); //set upper freq to 1300 by R3CON 
             if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3)) {
@@ -85,7 +85,7 @@ modClasses = [
             return firmwareData;
         }
     }
-    ,  //end credits by RE3CON
+    ,  
     class Mod_DisableTX extends FirmwareMod {
         constructor() {
             super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!!!", 0);
@@ -105,8 +105,8 @@ modClasses = [
 
             return firmwareData;
         }
-    }//just a quick edit... from tx-lock on all freq.
-    ,
+    }
+    ,//just a quick edit... from tx-lock on all freq. EOT credits by RE3CON
     class Mod_BatteryIcon extends FirmwareMod {
         constructor() {
             super("Battery icon", "Changes the battery icon to a more modern look.", 0);
