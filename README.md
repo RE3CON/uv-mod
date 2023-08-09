@@ -14,7 +14,7 @@ Visitors can generate a patched firmware image by selecting the desired patches.
 
 ## Copy and Host it, upload it on your own Webspace
 
-Simply download the [latest files in a zip file](https://github.com/RE3CON/uvmod/archive/refs/heads/main.zip) and extract it, upload it to your webspace hosting.
+Simply download the [latest files in a zip file](https://github.com/RE3CON/uvmod/archive/refs/heads/main.zip) and extract it, upload it to your own webspace hosting.
 
 ## Mod development
 
