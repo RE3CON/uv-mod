@@ -18,7 +18,7 @@ modClasses = [
     }
     ,
 */
-   class Mod_ChangeTXLimits extends FirmwareMod {
+/*   class Mod_ChangeTXLimits extends FirmwareMod {
         constructor() {
             super("Expand TX limits", "Allows transmission on the specified frequency range. Harmonic wave radiation TX PWR can be stronger than the on the input frequency. It may cause severe interference! Check your local law rules!", 0);
             this.inputMinTX = addInputField(this.modSpecificDiv, "Specify a new value for the minimum frequency in the range 18-1300 MHz:", "50");
@@ -53,7 +53,7 @@ modClasses = [
         }
     }
     , 
-   
+ */  
     class Mod_DisableTX extends FirmwareMod {
         constructor() {
             super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!!!", 0);
