@@ -1,4 +1,4 @@
-# [CLICK HERE TO OPEN UVMOD RX-TX](https://uvmod.ddns.net/) *feature work*
+# [CLICK HERE TO OPEN UVMOD RX-TX](http://uvmod.ddns.net/) *feature work*
 # [Original Version by whosmatt](https://github.com/whosmatt/uvmod)
 ## [中文版 Open Chinese Version (maintained independently)](https://uvmod.xanyi.eu.org/)
 # [UVMOD in russian language project](https://uvmod.valek.net.ru/)
