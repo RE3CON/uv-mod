@@ -1,4 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting</title>
+  </head>
+  <body onload="redirect()">
+	<h1 style="text-align: center; padding-top: 50px; display: block;">Redirecting...</h1>
+	<script>
+	  function redirect() {
+		setTimeout(function(){ 
+				window.location.replace("/");
+			}
+			, 100);	
+		}
+	</script>
+  </body>
+</html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,30 +30,30 @@
   <title>404</title>
 
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <!-- Custom fonts for this template-->
+ // -- Custom fonts for this template--
   <link href="fonts/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="fonts/nunito.css" rel="stylesheet">
 
-  <!-- Custom styles for this template-->
+  <!-- Custom styles for this template--
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
 <body id="page-top">
 
-  <!-- Page Wrapper -->
+  <!-- Page Wrapper --
   <div id="wrapper">
 
-    <!-- Content Wrapper -->
+    <!-- Content Wrapper --
     <div id="content-wrapper" class="d-flex align-items-center" style="height: 100vh;">
 
-      <!-- Main Content -->
+      <!-- Main Content --
       <div id="content">
 
-        <!-- Begin Page Content -->
+        <!-- Begin Page Content --
         <div class="container-fluid">
 
-          <!-- 404 Error Text -->
+          <!-- 404 Error Text --
           <div class="text-center">
             <div class="error mx-auto" data-text="404">404</div>
             <p class="lead text-gray-800 mb-5">Page Not Found</p>
@@ -42,19 +62,19 @@
           </div>
 
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.container-fluid --
 
       </div>
-      <!-- End of Main Content -->
+      <!-- End of Main Content --
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper --
 
 
   </div>
-  <!-- End of Page Wrapper -->
+  <!-- End of Page Wrapper --
 
-  <!-- Bootstrap core JavaScript-->
+  <!-- Bootstrap core JavaScript--
   <script src="js/vendor/jquery.min.js"></script>
   <script src="js/vendor/bootstrap.bundle.min.js"></script>
 
