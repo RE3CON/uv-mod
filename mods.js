@@ -87,7 +87,7 @@ modClasses = [
     }
     ,  
         */
-    class Mod_DisableTX extends FirmwareMod {
+    class Mod_DisableTXlock extends FirmwareMod {
         constructor() {
             super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!", 0);
         }
@@ -108,6 +108,43 @@ modClasses = [
         }
     }
     ,//just a quick edit... from tx-lock on all freq. EOT credits by RE3CON
+   class Mod_EnableTXEverywhereButAirBand extends FirmwareMod {
+        constructor() {
+            super("Enable TX everywhere except Air Band", "DANGER! Allows transmitting on all frequencies except air band (118 - 137 MHz). Only use this mod for testing, do not transmit on illegal frequencies!", 0);
+            this.hidden = true;
+        }
+
+        apply(firmwareData) {
+            const offset = 0x1804;
+            const newData = hexString("f0b5014649690968054a914205d3054a914202d20020c04301e00020ffe7f0bdc00db400a00bd100");
+            firmwareData = replaceSection(firmwareData, newData, offset);
+            log(`Success: ${this.name} applied.`);
+
+            return firmwareData;
+        }
+    }
+    , 
+   class Mod_DisableTX extends FirmwareMod {
+        constructor() {
+            super("Disable TX completely", "Prevents transmitting on all frequencies, making the radio purely a receiver.", 0);
+        }
+
+        apply(firmwareData) {
+            const offset = 0x180e;
+            const oldData = hexString("cf2a");
+            const newData = hexString("f0bd");
+            if (compareSection(firmwareData, oldData, offset)) {
+                firmwareData = replaceSection(firmwareData, newData, offset);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+
+            return firmwareData;
+        }
+    }
+    , 
     class Mod_FrequencyRangeSimple extends FirmwareMod {
         constructor() {
             super("Enhance RX Frequency Range", "Changes the lower limit of Band 1 to 18 MHz and the upper limit of Band 7 to 1300 MHz for RX. TX ranges are not affected. ", 0);
