@@ -26,9 +26,9 @@ modClasses = [
         }
 
         apply(firmwareData) {
-            const offset =  0xE090 oldData 80f77300f684cf00 newData 7fcba400f684cf00 //customFreq 
-            const offset2 = 0x150D oldData 771b0080a4bf077c newData 4b4c00008793037c  // 
-                  offset3 = 0xE0A8 oldData 00879303a02e6300 newData 80a4bf07a02e6300
+           // cant be 180e const offset =  0xE090 oldData 80f77300f684cf00 newData 7fcba400f684cf00 //customFreq 
+           // const offset2 = 0x150D oldData 771b0080a4bf077c newData 4b4c00008793037c  // 
+           //       offset3 = 0xE0A8 oldData 00879303a02e6300 newData 80a4bf07a02e6300
           
             
             const txStart = parseInt(this.inputMinTX.value) * 100000;
@@ -45,7 +45,7 @@ modClasses = [
                 const txHex = new Uint8Array(buffer);
 
                 firmwareData = replaceSection(firmwareData, txHex, offset);
-                firmwareData = replaceSection(firmwareData, txHex, offset2);
+               // firmwareData = replaceSection(firmwareData, txHex, offset2);
                 log(`Success: ${this.name}.`);
             }
             else {
@@ -89,7 +89,7 @@ modClasses = [
         */
     class Mod_DisableTX extends FirmwareMod {
         constructor() {
-            super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!!!", 0);
+            super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!", 0);
         }
 
         apply(firmwareData) {
@@ -108,6 +108,56 @@ modClasses = [
         }
     }
     ,//just a quick edit... from tx-lock on all freq. EOT credits by RE3CON
+    class Mod_FrequencyRangeSimple extends FirmwareMod {
+        constructor() {
+            super("Enhance RX Frequency Range", "Changes the lower limit of Band 1 to 18 MHz and the upper limit of Band 7 to 1300 MHz for RX. TX ranges are not affected. ", 0);
+        }
+
+        apply(firmwareData) {
+            const offset = 0xe074;
+            const oldData = hexString("404b4c0080cba4000085cf00c0800901c00e1602005a6202c029cd0280f77300f684cf00b6800901b60e1602f6596202b629cd0200879303");
+            const newData = hexString("40771b0080cba4000085cf00c0800901c00e1602005a6202c029cd0280f77300f684cf00b6800901b60e1602f6596202b629cd0280a4bf07");
+            if (compareSection(firmwareData, oldData, offset)) {
+                firmwareData = replaceSection(firmwareData, newData, offset);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+
+            return firmwareData;
+        }
+    }
+    ,
+    class Mod_AMOnAllBands extends FirmwareMod {
+        constructor() {
+            super("AM RX on all Bands", "For some reason, the original firmware only allows the AM setting to work on band 2. This mod allows AM reception to work on any band.", 0);
+        }
+
+        apply(firmwareData) {
+            const offset1 = 0x6232;
+            const offset2 = 0x6246;
+            const offset3 = 0x624c;
+            const oldData1 = hexString("0b");
+            const oldData2 = hexString("01");
+            const oldData3 = hexString("b07b");
+            const newData1 = hexString("0e");
+            const newData2 = hexString("04");
+            const newData3 = hexString("01e0");
+            if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3)) {
+                firmwareData = replaceSection(firmwareData, newData1, offset1);
+                firmwareData = replaceSection(firmwareData, newData2, offset2);
+                firmwareData = replaceSection(firmwareData, newData3, offset3);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+
+            return firmwareData;
+        }
+    }
+    ,
     class Mod_BatteryIcon extends FirmwareMod {
         constructor() {
             super("Battery icon", "Changes the battery icon to a more modern look.", 0);
@@ -452,27 +502,6 @@ modClasses = [
         }
     }
     ,
-    class Mod_FrequencyRangeSimple extends FirmwareMod {
-        constructor() {
-            super("Larger RX Frequency Range", "Changes the lower limit of Band 1 to 18 MHz and the upper limit of Band 7 to 1300 MHz for RX. TX ranges are not affected. ", 0);
-        }
-
-        apply(firmwareData) {
-            const offset = 0xe074;
-            const oldData = hexString("404b4c0080cba4000085cf00c0800901c00e1602005a6202c029cd0280f77300f684cf00b6800901b60e1602f6596202b629cd0200879303");
-            const newData = hexString("40771b0080cba4000085cf00c0800901c00e1602005a6202c029cd0280f77300f684cf00b6800901b60e1602f6596202b629cd0280a4bf07");
-            if (compareSection(firmwareData, oldData, offset)) {
-                firmwareData = replaceSection(firmwareData, newData, offset);
-                log(`Success: ${this.name} applied.`);
-            }
-            else {
-                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
-            }
-
-            return firmwareData;
-        }
-    }
-    ,
     class Mod_FrequencySteps extends FirmwareMod {
         constructor() {
             super("Frequency Steps", "Changes the frequency steps.", 0);
@@ -565,35 +594,6 @@ modClasses = [
             firmwareData = replaceSection(firmwareData, freqsHex, offset);
 
             log(`Success: ${this.name} applied.`);
-            return firmwareData;
-        }
-    }
-    ,
-    class Mod_AMOnAllBands extends FirmwareMod {
-        constructor() {
-            super("AM RX on all Bands", "For some reason, the original firmware only allows the AM setting to work on band 2. This mod allows AM reception to work on any band.", 0);
-        }
-
-        apply(firmwareData) {
-            const offset1 = 0x6232;
-            const offset2 = 0x6246;
-            const offset3 = 0x624c;
-            const oldData1 = hexString("0b");
-            const oldData2 = hexString("01");
-            const oldData3 = hexString("b07b");
-            const newData1 = hexString("0e");
-            const newData2 = hexString("04");
-            const newData3 = hexString("01e0");
-            if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3)) {
-                firmwareData = replaceSection(firmwareData, newData1, offset1);
-                firmwareData = replaceSection(firmwareData, newData2, offset2);
-                firmwareData = replaceSection(firmwareData, newData3, offset3);
-                log(`Success: ${this.name} applied.`);
-            }
-            else {
-                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
-            }
-
             return firmwareData;
         }
     }
