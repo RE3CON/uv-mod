@@ -15,13 +15,14 @@ Visitors can generate a patched firmware image by selecting the desired patches.
 
 Simply download the [latest files in a zip file](https://github.com/RE3CON/uvmod/archive/refs/heads/main.zip) and extract it, upload it to your own webspace hosting.
 
-## Extract/Encoding Firmware binaries
+## Unpack/Pack and Encoding Firmware binaries
 
 Firmware version spoofing modded firmware v2 for v3, v4 uv-5r plus
 1. Download file [qsfirm.py](https://github.com/RE3CON/Quansheng_UV-K5_Firmware/blob/main/firmware/qsfirm.py) and place it into the same folder with [yourfirmware.bin](https://github.com/RE3CON/Quansheng_UV-K5_Firmware/tree/main/firmware)
 3. Run command: qsfirm.py unpack yourfirmware.bin fw.dec.bin fw.ver.bin
-4. Edit file fw.ver.bin in hex editor to start with the fw version it should be flashed for example for v4, replace it with 4.00.01. A * makes it universal for all versions.
-5. Run command: qsfirm.py pack fw.dec.bin fw.ver.bin yourfirmware_mod_v4.bin
+4. Optional: At this point you can use [binary compersation](https://en.m.wikipedia.org/wiki/Comparison_of_file_comparison_tools) diff tools ([Binary diff Tool](https://www.guiffy.com/Binary-Diff-Tool.html), WinMerge, hexcompare, [HEXCMP](https://hexcmp.en.lo4d.com/windows), patch creater such as [diabolo 2oo2 universal patch engine](https://github.com/RE3CON/diablo2oo2-s-Universal-Patcher-dUP-Windows) or others (they may produce false positives once compiled as an exe. PE packer, crypter like PEcompact and co. can eliminate these wrong alerts). See unpacking and hacking forums about this topic.
+5. Edit file fw.ver.bin in a hex editor like [HXD](https://mh-nexus.de/en/hxd/) to change the fw version it should be flashed over for example for v4, replace it with 4.00.01. With a * instead of a number makes it universal for all versions flashable.
+6. Run command: qsfirm.py pack fw.dec.bin fw.ver.bin yourfirmware_mod_v4.bin
 
 ## Mod development
 
