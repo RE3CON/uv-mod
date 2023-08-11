@@ -70,11 +70,11 @@ modClasses = [
             const oldData1 = hexString("cf2a");  //TX lock //
             const oldData2 = hexString("80cba4"); // lower limit 50 lock
             const oldData3 = hexString("00879303"); // upper limit 600 lock
-            const oldData4 = hexString("4b4c0000879303");
+            const oldData4 = hexString("771b0080a4bf07");
             const newData1 = hexString("5de0"); //unlock TX 50-600 by R3CON //
             const newData2 = hexString("40771b"); //set lower freq to 18 by R3CON
             const newData3 = hexString("80a4bf07"); //set upper freq to 1300 by R3CON 
-            const newData4 = hexString("771b0080a4bf07") // TX full range by R3CON
+            const newData4 = hexString("4b4c0000879303") // TX full range by R3CON
             if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3) && compareSection(firmwareData, oldData3, offset4)) {
                 firmwareData = replaceSection(firmwareData, newData1, offset1);
                 firmwareData = replaceSection(firmwareData, newData2, offset2);
