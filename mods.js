@@ -75,7 +75,7 @@ modClasses = [
             const newData2 = hexString("40771b"); //set lower freq to 18 by R3CON
             const newData3 = hexString("80a4bf07"); //set upper freq to 1300 by R3CON 
             const newData4 = hexString("4b4c0000879303") // TX full range by R3CON
-            if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3) && compareSection(firmwareData, oldData3, offset4)) {
+            if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2) && compareSection(firmwareData, oldData3, offset3) && compareSection(firmwareData, oldData4, offset4)) {
                 firmwareData = replaceSection(firmwareData, newData1, offset1);
                 firmwareData = replaceSection(firmwareData, newData2, offset2);
                 firmwareData = replaceSection(firmwareData, newData3, offset3);
