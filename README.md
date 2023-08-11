@@ -23,7 +23,7 @@ Simply download the [latest files in a zip file](https://github.com/RE3CON/uvmod
 Firmware version spoofing on modded firmware v2 for v3, v4 uv-5r plus
 1. Download file [qsfirm.py](https://github.com/RE3CON/Quansheng_UV-K5_Firmware/blob/main/firmware/qsfirm.py) and place it into the same folder with [yourfirmware.bin](https://github.com/RE3CON/Quansheng_UV-K5_Firmware/tree/main/firmware)
 3. Run command: qsfirm.py unpack yourfirmware.bin fw.dec.bin fw.ver.bin
-4. Optional: At this point you can use [binary compersation](https://en.m.wikipedia.org/wiki/Comparison_of_file_comparison_tools) diff tools ([Binary diff Tool](https://www.guiffy.com/Binary-Diff-Tool.html), WinMerge, hexcompare, [HEXCMP](https://hexcmp.en.lo4d.com/windows), patch creater such as [diabolo 2oo2 universal patch engine](https://github.com/RE3CON/diablo2oo2-s-Universal-Patcher-dUP-Windows) or others (they may produce false positives alerts (like unwanted Patch Tool risk) once compiled as an exe patcher file. PE packer, crypter like PEcompact and co. can eliminate these wrong alerts). See unpacking and hacking forums about this topic. Disabling AV software such as windows defender complete with all protection features will be a temporary solution or run in a virtual enviroments (VM) isolated if you'r afraid.
+4. Optional: At this point you can use [binary compersation](https://en.m.wikipedia.org/wiki/Comparison_of_file_comparison_tools) diff tools ([Binary diff Tool](https://www.guiffy.com/Binary-Diff-Tool.html), WinMerge, hexcompare, [HEXCMP](https://hexcmp.en.lo4d.com/windows), patch creater such as [diabolo 2oo2 universal patch engine](https://github.com/RE3CON/diablo2oo2-s-Universal-Patcher-dUP-Windows) or others see eXe stuff forums. They may produce false positives alerts like unwanted Patch Tool risk once compiled as an exe patcher file. PE packer, crypter like PEcompact and co. can eliminate these wrong alerts). See unpacking and hacking forums about this topic. Disabling AV software such as windows defender complete with all protection features will be a temporary solution or run in a virtual enviroments (VM) isolated if you'r afraid.
 5. Edit file fw.ver.bin in a hex editor like [HXD](https://mh-nexus.de/en/hxd/) to change the fw version where it should be flashed over. For example for v4, replace it with 4.00.01. With a * instead of a number makes it universal for all fw versions flashable.
 6. Run command: qsfirm.py pack fw.dec.bin fw.ver.bin yourfirmware_mod_v4.bin
 
@@ -35,7 +35,7 @@ Also __refer to the helper functions and documentation in__ [modframework.js](js
 
 The supported format for binary data is in the format of a hex string __without separators__. You can use find and replace to remove all `\x` from a regular hex string or directly export the correct format from a bytes object in python using `print(''.join('%02x'%i for i in BYTES_OBJECT))`.
 
-You may try one of these Java to exe convertors, compiling a java program into an executable. AutoIt and other scripting tools etc..Most patches are also in [Python](https://github.com/amnemonic/Quansheng_UV-K5_Firmware/tree/main/uvmod_kitchen) available  to create an offline application.
+You may try one of these Java to exe convertors, compiling a java program into an executable. AutoIt and other scripting tools etc.. Most patches are also in [Python](https://github.com/amnemonic/Quansheng_UV-K5_Firmware/tree/main/uvmod_kitchen) available  to create an offline application.
 
 ## **Comming soon** 
 Offline universal firmware version patcher
