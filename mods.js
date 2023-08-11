@@ -3,7 +3,7 @@ modClasses = [
 /* DO PAY PROPPER CREDITS! CODE TX RX on all Bands 18-1300 diffs by RE3CON, CODE Disable TX Lock by RE3CON */      
   class Mod_TXRXOnAllBands extends FirmwareMod {
         constructor() {
-            super("TX and RX from 18-1300MHz (Tunas1337 Mod diffs)", "Allows recieve (RX) and transmit (TX) on the frequency range from 18 MHz - 1300 MHz. This Mode includes the following Mods: Disable TX Lock, Mod Enhance RX frequency range!", 0);
+            super("TX and RX from 18-1300MHz (Tunas1337 Mod diffs)", "Allows recieve (RX) and transmit (TX) on the frequency range from 18 MHz - 1300 MHz. This Mode includes the following Mods: Disable TX Lock, Enhance RX Frequency Range.", 0);
         }
         apply(firmwareData) {
             const offset1 = 0x180E;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
