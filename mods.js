@@ -58,9 +58,9 @@ modClasses = [
     , 
  */ 
     
-  class Mod_RXOnAllBands extends FirmwareMod {
+  class Mod_TXRXOnAllBands extends FirmwareMod {
         constructor() {
-            super("TX and RX on all Bands from 18-1300MHz", "Allows recieve RX and transmit TX on the frequency range from 18 MHz - 1300 MHz.", 0);
+            super("TX and RX on all Bands from 18-1300MHz", "Allows recieve (RX) and transmit (TX) on the frequency range from 18 MHz - 1300 MHz.", 0);
         }
         apply(firmwareData) {
             const offset1 = 0x180E;  //diffs by RE3CON taken from Tunas1337 18-1300 Mod
