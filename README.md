@@ -34,11 +34,12 @@ Mods are defined in [mods.js](mods.js), with an example mod to outline the patte
 Also __refer to the helper functions and documentation in__ [modframework.js](js/modframework.js).  
 
 The supported format for binary data is in the format of a hex string __without separators__. You can use find and replace to remove all `\x` from a regular hex string or directly export the correct format from a bytes object in python using `print(''.join('%02x'%i for i in BYTES_OBJECT))`.
-You may try one of these Java to exe convertors, compiling a java program into an executable. AutoIt and other scripting tools etc.. to create an offline application.
+
+You may try one of these Java to exe convertors, compiling a java program into an executable. AutoIt and other scripting tools etc..Most patches are also in [Python](https://github.com/amnemonic/Quansheng_UV-K5_Firmware/tree/main/uvmod_kitchen) available  to create an offline application.
 
 ## **Comming soon** 
 Offline universal firmware version patcher
-based on search and replace pattern to change and modificate with precission the functions of these patches direct on all firmware versions and upcoming versions files.<br>
+based on search and replace pattern to change and modificate with precission the fu nctions of these patches direct on all firmware versions and upcoming versions files.<br>
 
 ## Credits, rules and trouble maker...
 "I'll take in account an EU Country block on a new DNS domain cause of different law regulations in whosmatt location. Threatens me with reference to DCMA is a taboo that's absolutely frowned upon among open source coding communities. A No-Go by doing shared code works. Sadly to be afraid from TX mods and freq limits >999MHz, 4 freq digits in MHz range will never match on the LCD screen, not to talk about changing the way how the direct keypad input should be changed to accept numbers higher than 999.999,(99). However he's desided to use my TX unlock code and maybe sooner or later my Tunnas1337 diffs done for TX and RX from 18-1300MHz Mod without paying propper credits back."
