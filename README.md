@@ -39,7 +39,7 @@ You may try one of these Java to exe convertors, compiling a java program into a
 
 ## **Comming soon** 
 Offline universal firmware version patcher
-based on search and replace pattern to change and modificate with precission the fu nctions of these patches direct on all firmware versions and upcoming versions files.<br>
+based on search and replace pattern to change and modificate with precission the functions of these patches direct on all firmware versions and upcoming versions files.<br>
 
 ## Credits, rules and trouble maker...
 "I'll take in account an EU Country block on a new DNS domain cause of different law regulations in whosmatt location. Threatens me with reference to DCMA is a taboo that's absolutely frowned upon among open source coding communities. A No-Go by doing shared code works. Sadly to be afraid from TX mods and freq limits >999MHz, 4 freq digits in MHz range will never match on the LCD screen, not to talk about changing the way how the direct keypad input should be changed to accept numbers higher than 999.999,(99). However he's desided to use my TX unlock code and maybe sooner or later my Tunnas1337 diffs done for TX and RX from 18-1300MHz Mod without paying propper credits back."
