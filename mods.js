@@ -33,7 +33,39 @@ modClasses = [
         }
     }
     ,  
-        
+    class Mod_ChangeTXLimits extends FirmwareMod {
+        constructor() {
+            super("Extend TX limits", "Allows transmission on the specified frequency range.", 0);
+            this.inputMinTX = addInputField(this.modSpecificDiv, "Specify a new value for the minimum frequency in the range 18-1300 MHz:", "50");
+            this.inputMaxTX = addInputField(this.modSpecificDiv, "Specify a new value for the maximum frequency in the range 18-1300 MHz:", "600");
+        }
+
+        apply(firmwareData) {
+            const offset = 0x150c;
+            const txStart = parseInt(this.inputMinTX.value) * 100000;
+            const txStop = parseInt(this.inputMaxTX.value) * 100000;
+
+            if ((txStart <= txStop) && (txStart >= 1800000) && (txStart <= 130000000) && (txStop >= 1800000) && (txStop <= 130000000)) {
+
+                const buffer = new ArrayBuffer(8);
+                const dataView = new DataView(buffer);
+
+                dataView.setUint32(0, txStart, true);
+                dataView.setUint32(4, txStop, true);
+
+                const txHex = new Uint8Array(buffer);
+
+                firmwareData = replaceSection(firmwareData, txHex, offset);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`Error in ${this.name}: Incorrect data! The frequencies must be greater than 18 MHz and less than 1300 MHz, the maximum greater than or equal to the minimum.`);
+            }
+
+            return firmwareData;
+        }
+    }
+    ,        
     class Mod_DisableTXlock extends FirmwareMod {
         constructor() {
             super("Disable TX Lock from 50-600 MHz", "Enables transmitting on frequencies from 50 MHz to 600 MHz. The harmonic wave radiation can be stronger than on the input frequency and cause severe interference!", 0);
