@@ -20,7 +20,8 @@ Simply download the [latest files in a zip file](https://github.com/RE3CON/uvmod
 
 ## Unpack/Pack and Encoding Firmware binaries
 
-Firmware version spoofing on modded firmware v2 for v3, v4 uv-5r plus
+Firmware version spoofing on modded firmware v2 for v3, v4 uv-5r plus<br>
+You must have [Python](https://www.python.org/downloads/) installed.
 1. Download file [qsfirm.py](https://github.com/RE3CON/Quansheng_UV-K5_Firmware/blob/main/firmware/qsfirm.py) and place it into the same folder with [yourfirmware.bin](https://github.com/RE3CON/Quansheng_UV-K5_Firmware/tree/main/firmware)
 3. Run command: qsfirm.py unpack yourfirmware.bin fw.dec.bin fw.ver.bin
 4. Optional: At this point you can use [binary compersation](https://en.m.wikipedia.org/wiki/Comparison_of_file_comparison_tools) diff and merge tools ([Binary diff Tool](https://www.guiffy.com/Binary-Diff-Tool.html), WinMerge, hexcompare, [HEXCMP](https://hexcmp.en.lo4d.com/windows). For search replace pattern, they are likely firmware version independend, you may use patch creater w/o installed Python dist. requirements to unpack/pack. Applying even on a packed firmware bin such as [diabolo 2oo2 universal patch engine](https://github.com/RE3CON/diablo2oo2-s-Universal-Patcher-dUP-Windows) or others see eXe stuff forums. They may produce false positives alerts like unwanted Patch Tool risk once compiled as an exe patcher file. PE packer, crypter like PEcompact and co. can eliminate these wrong alerts. See unpacking and hacking forums about this topic. Completely Disabling AV software such as windows defender with all protection features and levels will be a temporary solution or run it in a virtual machine enviroment (VM) isolated if you'r afraid.
