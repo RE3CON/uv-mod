@@ -1,4 +1,4 @@
-# [CLICK HERE TO OPEN UVMOD RX-TX](http://uv-mod.leechermods.com/) *feature work*
+# [Visit UV-MOD RX-TX](http://uv-mod.leechermods.com/) *feature work*
 ## [中文版 Open Chinese Version (maintained independently)](https://uvmod.xanyi.eu.org/)
 # [UVMOD in Russian Language Version](https://uvmod.valek.net.ru/)
 
@@ -7,7 +7,7 @@
 ## Introduction
 
 Web-based client-side Quansheng firmware patcher written in Javascript and HTML.
-It is based on the discoveries by the many contributors in the [uvmod-kitchen](https://github.com/amnemonic/Quansheng_UV-K5_Firmware/tree/main/uvmod_kitchen) by writing Python in Java code and analyzing modded firmware binaries for my enhanced UVMOD RX-TX patcher by making diffs from unpacked binaries to get the results for changing/replacing the propper offsets bit strings in heximal for example based on [Tunas1337 UV-K5 Modded Firmwares](https://github.com/Tunas1337/UV-K5-Modded-Firmwares). This patcher implements the **same functionality** not limited to RX only but also TX in a modular and flexible javascript structure. This is an enhanced RX-TX UVMOD based on [whosmatt UVMOD src](https://github.com/whosmatt/uvmod). The first TX features were much earlier written and released here thats why the name UVMOD RX-TX.
+It is based on the discoveries by the many contributors in the [uvmod-kitchen](https://github.com/amnemonic/Quansheng_UV-K5_Firmware/tree/main/uvmod_kitchen) by writing Python in Java code and analyzing modded firmware binaries for my enhanced UV-MOD RX-TX patcher by making diffs from unpacked binaries to get the results for changing/replacing the propper offsets bit strings in heximal for example based on [Tunas1337 UV-K5 Modded Firmwares](https://github.com/Tunas1337/UV-K5-Modded-Firmwares). This patcher implements the **same functionality** not limited to RX only but also TX in a modular and flexible javascript structure. This is an enhanced RX-TX UV-MOD based on [whosmatt UVMOD src](https://github.com/whosmatt/uvmod). The first TX features were much earlier written and released here thats why the name UV-MOD RX-TX.
 
 ## How it works
 On the [website](https://recon.ddns.net/) you can generate a patched firmware image by selecting the patches of your choice. The patcher encode, apply the patches to modify and then decode the firmware on a binary level and can accept user input to customize variables. A custom base image can be supplied (uploaded) to allow support for mods that are compiled and linked directly into the firmware. The mods (patches) will be applied in the range from the first mod on top to the last mod on button. The later mods on the webpage can overwrite the mods function standing on the top of the online patcher and run in the direction down of the mods collection. eg. Mod TX and RX from 18-1300MHz will get overwritten if you select it together with Disable TX Lock from 50-600 MHz, Enable TX everywhere except Air Band, ...and so forth... because this functions are in contrast to each other. 
@@ -16,7 +16,7 @@ Use it wisely and choose your selected mods carefully before apply, download (sa
 
 ## Copy and Host it, upload it on your own Webspace
 
-Simply download the [latest files in a zip file](https://github.com/RE3CON/uvmod/archive/refs/heads/main.zip) and extract it, upload it to your own webspace hosting.
+Simply download the [latest files in a zip file](https://github.com/RE3CON/uv-mod/archive/refs/heads/main.zip) and extract it, upload it to your own webspace hosting.
 
 ## Unpack/Pack and Encoding Firmware binaries
 
