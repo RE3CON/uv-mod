@@ -1,4 +1,4 @@
-# [CLICK HERE TO OPEN UVMOD RX-TX](http://uvmod.ddns.net/) *feature work*
+# [CLICK HERE TO OPEN UVMOD RX-TX](http://uv-mod.leechermods.com/) *feature work*
 ## [中文版 Open Chinese Version (maintained independently)](https://uvmod.xanyi.eu.org/)
 # [UVMOD in Russian Language Version](https://uvmod.valek.net.ru/)
 
