@@ -227,6 +227,169 @@ modClasses = [
         }
     }
     ,
+    class Mod_MicGain extends FirmwareMod {
+        constructor() {
+            super("Increase Mic sensitivity Gain", "makes the microphone more sensitive. You can hold it more far away to speak but background sound will be also louder. It does not gain the maximum mic volume. You can still fine tune the mic gain in the menu but it will always increase the sensitivity as without this mod.", 0);
+        }
+        apply(firmwareData) {
+            const offset = 0xa8e4;
+            const offset2 = 0x1c94;
+            const oldData = hexString("40e90000");
+            const newData = hexString("4fe90000");
+            if (compareSection(firmwareData, oldData, offset) && compareSection(firmwareData, oldData, offset2)) {
+                firmwareData = replaceSection(firmwareData, newData, offset);
+                firmwareData = replaceSection(firmwareData, newData, offset2);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+            return firmwareData;
+        }
+    }
+    ,
+    class Mod_FreqCopyTimeout extends FirmwareMod {
+        constructor() {
+            super("Disable Freq Copy Timeout", "Prevents freq copy and CTCSS decoder from timeout with \"SCAN FAIL\", allowing both functions to run indefinitely until a signal is found.", 0);
+        }
+        apply(firmwareData) {
+            const offset = 0x4bbc;
+            const oldData = hexString("521c");
+            const newData = hexString("00bf");
+            if (compareSection(firmwareData, oldData, offset)) {
+                firmwareData = replaceSection(firmwareData, newData, offset);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+            return firmwareData;
+        }
+    }
+    ,
+    class Mod_RogerBeep extends FirmwareMod {
+        constructor() {
+            super("Roger Beep", "Changes the sound of the two Roger Beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. To open NOAA Ton-Squelch set 1050 Hz as Ton 1", 0);
+            this.inputTone1 = addInputField(this.modSpecificDiv, "Tone 1 frequency (Hz)", "1540");
+            this.inputTone2 = addInputField(this.modSpecificDiv, "Tone 2 frequency (Hz)", "1310");
+        }
+        apply(firmwareData) {
+            const offset = 0xaed0;
+            const tone1 = Math.trunc(parseInt(this.inputTone1.value) * 10.32444);
+            const tone2 = Math.trunc(parseInt(this.inputTone2.value) * 10.32444);
+            if (tone1 <= 0xFFFF && tone2 <= 0xFFFF) {
+                const buffer = new ArrayBuffer(8);
+                const dataView = new DataView(buffer);
+                dataView.setUint32(0, tone1, true); // true indicates little-endian byte order
+                dataView.setUint32(4, tone2, true);
+                const tonesHex = new Uint8Array(buffer);
+                firmwareData = replaceSection(firmwareData, tonesHex, offset);
+                firmwareData = replaceSection(firmwareData, hexString("96"), 0xae9a);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+            return firmwareData;
+        }
+    }
+    ,
+    class Mod_FrequencySteps extends FirmwareMod {
+        constructor() {
+            super("Frequency Steps", "Changes the frequency steps.", 0);
+            this.inputStep1 = addInputField(this.modSpecificDiv, "Frequency Step 1 (Hz)", "2500");
+            this.inputStep2 = addInputField(this.modSpecificDiv, "Frequency Step 2 (Hz)", "5000");
+            this.inputStep3 = addInputField(this.modSpecificDiv, "Frequency Step 3 (Hz)", "6250");
+            this.inputStep4 = addInputField(this.modSpecificDiv, "Frequency Step 4 (Hz)", "10000");
+            this.inputStep5 = addInputField(this.modSpecificDiv, "Frequency Step 5 (Hz)", "12500");
+            this.inputStep6 = addInputField(this.modSpecificDiv, "Frequency Step 6 (Hz)", "25000");
+            this.inputStep7 = addInputField(this.modSpecificDiv, "Frequency Step 7 (Hz) (only available on band 2)", "8330");
+        }
+        apply(firmwareData) {
+            const offset = 0xE0C8;
+            const steps = [
+                Math.trunc(parseInt(this.inputStep1.value) * 0.1),
+                Math.trunc(parseInt(this.inputStep2.value) * 0.1),
+                Math.trunc(parseInt(this.inputStep3.value) * 0.1),
+                Math.trunc(parseInt(this.inputStep4.value) * 0.1),
+                Math.trunc(parseInt(this.inputStep5.value) * 0.1),
+                Math.trunc(parseInt(this.inputStep6.value) * 0.1),
+                Math.trunc(parseInt(this.inputStep7.value) * 0.1),
+            ];
+            const buffer = new ArrayBuffer(14);
+            const dataView = new DataView(buffer);
+            for (let i = 0; i < steps.length; i++) {
+                dataView.setUint16(i * 2, steps[i], true); // true indicates little-endian byte order
+            }
+            const stepsHex = new Uint8Array(buffer);
+            firmwareData = replaceSection(firmwareData, stepsHex, offset);
+            log(`Success: ${this.name} applied.`);
+            return firmwareData;
+        }
+    }
+    ,
+    class Mod_NOAAFrequencies extends FirmwareMod {
+        constructor() {
+            super("NOAA Frequencies", "The NOAA scan feature is unique because it can scan in the background, all the time and stop only if a 1050 Hz Ton received to demute the speaker. However most people dont need the weather alerts or dont have NOAA in their country. This mod lets you change the frequencies so you can use the NOAA scan function for something else. The values below are pre-set to the first 10 PMR446 channels. A 1050 Hz Ton >150ms can be send with the Rogger Beep mod", 0);
+            this.inputFreq1 = addInputField(this.modSpecificDiv,   "Frequency 1 (Hz)", "446006250");
+            this.inputFreq2 = addInputField(this.modSpecificDiv,   "Frequency 2 (Hz)", "446018750");
+            this.inputFreq3 = addInputField(this.modSpecificDiv,   "Frequency 3 (Hz)", "446031250");
+            this.inputFreq4 = addInputField(this.modSpecificDiv,   "Frequency 4 (Hz)", "446043750");
+            this.inputFreq5 = addInputField(this.modSpecificDiv,   "Frequency 5 (Hz)", "446056250");
+            this.inputFreq6 = addInputField(this.modSpecificDiv,   "Frequency 6 (Hz)", "446068750");
+            this.inputFreq7 = addInputField(this.modSpecificDiv,   "Frequency 7 (Hz)", "446081250");
+            this.inputFreq8 = addInputField(this.modSpecificDiv,   "Frequency 8 (Hz)", "446093750");
+            this.inputFreq9 = addInputField(this.modSpecificDiv,   "Frequency 9 (Hz)", "446106250");
+            this.inputFreq10 = addInputField(this.modSpecificDiv,  "Frequency 10 (Hz)", "446118750");
+        }
+        apply(firmwareData) {
+            const offset = 0xE0D8;
+            const freqs = [
+                Math.trunc(parseInt(this.inputFreq1.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq2.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq3.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq4.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq5.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq6.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq7.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq8.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq9.value) * 0.1),
+                Math.trunc(parseInt(this.inputFreq10.value) * 0.1)
+            ];
+            const buffer = new ArrayBuffer(40);
+            const dataView = new DataView(buffer);
+            for (let i = 0; i < freqs.length; i++) {
+                dataView.setUint32(i * 4, freqs[i], true); // true indicates little-endian byte order
+            }
+            const freqsHex = new Uint8Array(buffer);
+            firmwareData = replaceSection(firmwareData, freqsHex, offset);
+            log(`Success: ${this.name} applied.`);
+            return firmwareData;
+        }
+    }
+    , 
+    class Mod_EnableSWDPort extends FirmwareMod {
+        constructor() {
+            super("Enable SWD Port", "If you don't know what SWD is, you don't need this! Allows debugging via SWD. You will need to solder wires to the main board of the radio and connect them to specialized hardware. ", 0);
+        }
+        apply(firmwareData) {
+            const offset1 = 0xb924;
+            const offset2 = 0xb9b2;
+            const oldData1 = hexString("c860");
+            const oldData2 = hexString("4860");
+            const newData = hexString("00bf");
+            if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2)) {
+                firmwareData = replaceSection(firmwareData, newData, offset1);
+                firmwareData = replaceSection(firmwareData, newData, offset2);
+                log(`Success: ${this.name} applied.`);
+            }
+            else {
+                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
+            }
+            return firmwareData;
+        }
+    }
+    ,
     class Mod_BatteryIcon extends FirmwareMod {
         constructor() {
             super("Battery icon", "Changes the battery icon to a more modern look.", 0);
@@ -249,7 +412,6 @@ modClasses = [
     class Mod_ChangeContrast extends FirmwareMod {
         constructor() {
             super("LCD Contrast", "Changes LCD contrast to any value from 0 to 63 (higher is darker). The default value is 31", 0);
-
             this.contrastValue = addInputField(this.modSpecificDiv, "Enter a new contrast value from 0-63:", "31");
         }
         apply(firmwareData) {
@@ -287,25 +449,6 @@ modClasses = [
                 firmwareData = replaceSection(firmwareData, smallDigits, 0xd620);
             }
             log(`Success: ${this.name} applied.`);
-            return firmwareData;
-        }
-    }
-    ,
-    class Mod_FreqCopyTimeout extends FirmwareMod {
-        constructor() {
-            super("Disable Freq Copy Timeout", "Prevents freq copy and CTCSS decoder from timeout with \"SCAN FAIL\", allowing both functions to run indefinitely until a signal is found.", 0);
-        }
-        apply(firmwareData) {
-            const offset = 0x4bbc;
-            const oldData = hexString("521c");
-            const newData = hexString("00bf");
-            if (compareSection(firmwareData, oldData, offset)) {
-                firmwareData = replaceSection(firmwareData, newData, offset);
-                log(`Success: ${this.name} applied.`);
-            }
-            else {
-                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
-            }
             return firmwareData;
         }
     }
@@ -404,27 +547,6 @@ modClasses = [
         }
     }
     ,
-    class Mod_MicGain extends FirmwareMod {
-        constructor() {
-            super("Increase Mic sensitivity Gain", "makes the microphone more sensitive. You can hold it more far away to speak but background sound will be also louder. It does not gain the maximum mic volume. You can still fine tune the mic gain in the menu but it will always increase the sensitivity as without this mod.", 0);
-        }
-        apply(firmwareData) {
-            const offset = 0xa8e4;
-            const offset2 = 0x1c94;
-            const oldData = hexString("40e90000");
-            const newData = hexString("4fe90000");
-            if (compareSection(firmwareData, oldData, offset) && compareSection(firmwareData, oldData, offset2)) {
-                firmwareData = replaceSection(firmwareData, newData, offset);
-                firmwareData = replaceSection(firmwareData, newData, offset2);
-                log(`Success: ${this.name} applied.`);
-            }
-            else {
-                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
-            }
-            return firmwareData;
-        }
-    }
-    ,
     class Mod_NegativeDisplay extends FirmwareMod {
         constructor() {
             super("Negative Display", "Inverts the LCD display apperiance.", 0);
@@ -435,33 +557,6 @@ modClasses = [
             const newData = hexString("a7");
             if (compareSection(firmwareData, oldData, offset)) {
                 firmwareData = replaceSection(firmwareData, newData, offset);
-                log(`Success: ${this.name} applied.`);
-            }
-            else {
-                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
-            }
-            return firmwareData;
-        }
-    }
-    ,
-    class Mod_RogerBeep extends FirmwareMod {
-        constructor() {
-            super("Roger Beep", "Changes the sound of the two Roger Beep tones. Tone 1 plays for 150ms and tone 2 for 80ms. The defaults in this mod are similar to the Mototrbo beep. The maximum is 6347 Hz. To open NOAA Ton-Squelch set 1050 Hz as Ton 1", 0);
-            this.inputTone1 = addInputField(this.modSpecificDiv, "Tone 1 frequency (Hz)", "1540");
-            this.inputTone2 = addInputField(this.modSpecificDiv, "Tone 2 frequency (Hz)", "1310");
-        }
-        apply(firmwareData) {
-            const offset = 0xaed0;
-            const tone1 = Math.trunc(parseInt(this.inputTone1.value) * 10.32444);
-            const tone2 = Math.trunc(parseInt(this.inputTone2.value) * 10.32444);
-            if (tone1 <= 0xFFFF && tone2 <= 0xFFFF) {
-                const buffer = new ArrayBuffer(8);
-                const dataView = new DataView(buffer);
-                dataView.setUint32(0, tone1, true); // true indicates little-endian byte order
-                dataView.setUint32(4, tone2, true);
-                const tonesHex = new Uint8Array(buffer);
-                firmwareData = replaceSection(firmwareData, tonesHex, offset);
-                firmwareData = replaceSection(firmwareData, hexString("96"), 0xae9a);
                 log(`Success: ${this.name} applied.`);
             }
             else {
@@ -487,7 +582,6 @@ modClasses = [
             const dataGraph = hexString("10b5064c2378002b07d1054b002b02d0044800e000bf0123237010bd9413002000000000c0000000044b10b5002b03d00349044800e000bf10bdc0460000000098130020c00000000023c25c0133002afbd1581e70470000002243088b4274d303098b425fd3030a8b4244d3030b8b4228d3030c8b420dd3ff22090212ba030c8b4202d31212090265d0030b8b4219d300e0090ac30b8b4201d3cb03c01a5241830b8b4201d38b03c01a5241430b8b4201d34b03c01a5241030b8b4201d30b03c01a5241c30a8b4201d3cb02c01a5241830a8b4201d38b02c01a5241430a8b4201d34b02c01a5241030a8b4201d30b02c01a5241cdd2c3098b4201d3cb01c01a524183098b4201d38b01c01a524143098b4201d34b01c01a524103098b4201d30b01c01a5241c3088b4201d3cb00c01a524183088b4201d38b00c01a524143088b4201d34b00c01a5241411a00d20146524110467047ffe701b5002000f006f802bdc0460029f7d076e770477047c04600207047d308db015918e0239b00994207d807231a40063b93404068425c134343547047406840187047002070470a00303a0300d0b2092805d900202d2901d15868463070470720424358688018f9e70820704707207047e02210b500214068920000f064f910bd10b5d523984710bdf8b5040040680d0000281fd003685b68984707002068218903689b6898470600606829000368db6898470200002e05d039003000002f0bd000f038f9606829000368db68984723891b1823810020f8bd00f035f9f2e70000f0b5594b8bb003934b680025069303ab07936b469d84554b0c68554a1b6805af0600049405920895db0729d50c20736998475049830700d50d700b784e4a142b04d83220ff30205cff281bd11578002d16d1012304981370813080222900ff3000f001f960222900444800f0fcf8444b1d703223ff33e35cff2b01d0b36998470bb0f0bd01330b70002313706a468133ff3301ad93843b4905222800089700f0d9f86720736998474008c0b20028e7d0a02826d920236030c4b22b7064212000fff7aefe30300a2168702000fff7a8fe0a21c0b2fff72aff3031a97020000a21fff724ff00273031e9702800fff790fe87420cd2e95d07a80137fff755ffffb2f3e760246442241a2d23e4b2d5e71c4f3b78203b5f2b01d920233b7007235c431c413d781549221c4819e4b220389c4200d91a1cd2b29a1aff231341db4303707b2d08d800232a0018001f3a8a18d0540133042bfbd104986022a130ff30013500f078f83d7089e7dce9000000100640f4e900008c1300208d130020b013002010140020cee9000010b50e4c2378002b05d100f02bf800f039f8012323700a4b19684a1c1a60094b4b4309498b4205d8c82a03d907490848fff722ff074b984710bdc0461c14002090130020efeeeeee1111111104ea00001cea000099c30000014b5a1c5a60704714140020044b054a0548834202d202ca02c3fae77047c0468c130020a0ea00009413002070b500260c4d0d4c641ba410a64209d1002600f081f80a4d0a4c641ba410a64205d170bdb300eb5898470136eee7b300eb5898470136f2e794ea000094ea000094ea00009cea0000002310b59a4200d110bdcc5cc4540133f8e703008218934200d1704719700133f9e7673030300000000000000000000091e6000095e60000b5e60000e9e600000000000000000000bbe60000bfe60000e1e60000e5e600000407002020d6000048d30000b303002084060020060400204d870000edd0000001d1000045be000001af000061a9000039b60000b9b00000e9c600000d8700004d8600007da6000019a50000cda7000029010000bdaa0000d5aa0000d91c00003da6000095a70000b1b60000119c0000d500000099c30000f8b5c046f8bc08bc9e467047f8b5c046f8bc08bc9e46704749e5000039e9000021e50000ff01000001000000");
             if (this.selectSbar.checked) {
                 firmwareData = replaceSection(firmwareData, dataSbar, firmwareData.length);
-
                 log(`Success: ${this.name} S-Meter applied.`);
             }
             else if (this.selectGraph.checked) {
@@ -498,101 +592,5 @@ modClasses = [
             return firmwareData;
         }
     }
-    ,
-    class Mod_EnableSWDPort extends FirmwareMod {
-        constructor() {
-            super("Enable SWD Port", "If you don't know what SWD is, you don't need this! Allows debugging via SWD. You will need to solder wires to the main board of the radio and connect them to specialized hardware. ", 0);
-        }
-        apply(firmwareData) {
-            const offset1 = 0xb924;
-            const offset2 = 0xb9b2;
-            const oldData1 = hexString("c860");
-            const oldData2 = hexString("4860");
-            const newData = hexString("00bf");
-            if (compareSection(firmwareData, oldData1, offset1) && compareSection(firmwareData, oldData2, offset2)) {
-                firmwareData = replaceSection(firmwareData, newData, offset1);
-                firmwareData = replaceSection(firmwareData, newData, offset2);
-                log(`Success: ${this.name} applied.`);
-            }
-            else {
-                log(`ERROR in ${this.name}: Unexpected data, already patched or wrong firmware?`);
-            }
-            return firmwareData;
-        }
-    }
-    ,
-    class Mod_FrequencySteps extends FirmwareMod {
-        constructor() {
-            super("Frequency Steps", "Changes the frequency steps.", 0);
-            this.inputStep1 = addInputField(this.modSpecificDiv, "Frequency Step 1 (Hz)", "2500");
-            this.inputStep2 = addInputField(this.modSpecificDiv, "Frequency Step 2 (Hz)", "5000");
-            this.inputStep3 = addInputField(this.modSpecificDiv, "Frequency Step 3 (Hz)", "6250");
-            this.inputStep4 = addInputField(this.modSpecificDiv, "Frequency Step 4 (Hz)", "10000");
-            this.inputStep5 = addInputField(this.modSpecificDiv, "Frequency Step 5 (Hz)", "12500");
-            this.inputStep6 = addInputField(this.modSpecificDiv, "Frequency Step 6 (Hz)", "25000");
-            this.inputStep7 = addInputField(this.modSpecificDiv, "Frequency Step 7 (Hz) (only available on band 2)", "8330");
-        }
-        apply(firmwareData) {
-            const offset = 0xE0C8;
-            const steps = [
-                Math.trunc(parseInt(this.inputStep1.value) * 0.1),
-                Math.trunc(parseInt(this.inputStep2.value) * 0.1),
-                Math.trunc(parseInt(this.inputStep3.value) * 0.1),
-                Math.trunc(parseInt(this.inputStep4.value) * 0.1),
-                Math.trunc(parseInt(this.inputStep5.value) * 0.1),
-                Math.trunc(parseInt(this.inputStep6.value) * 0.1),
-                Math.trunc(parseInt(this.inputStep7.value) * 0.1),
-            ];
-            const buffer = new ArrayBuffer(14);
-            const dataView = new DataView(buffer);
-            for (let i = 0; i < steps.length; i++) {
-                dataView.setUint16(i * 2, steps[i], true); // true indicates little-endian byte order
-            }
-            const stepsHex = new Uint8Array(buffer);
-            firmwareData = replaceSection(firmwareData, stepsHex, offset);
-            log(`Success: ${this.name} applied.`);
-            return firmwareData;
-        }
-    }
-    ,
-    class Mod_NOAAFrequencies extends FirmwareMod {
-        constructor() {
-            super("NOAA Frequencies", "The NOAA scan feature is unique because it can scan in the background, all the time and stop only if a 1050 Hz Ton received to demute the speaker. However most people dont need the weather alerts or dont have NOAA in their country. This mod lets you change the frequencies so you can use the NOAA scan function for something else. The values below are pre-set to the first 10 PMR446 channels. A 1050 Hz Ton >150ms can be send with the Rogger Beep mod", 0);
-            this.inputFreq1 = addInputField(this.modSpecificDiv,   "Frequency 1 (Hz)", "446006250");
-            this.inputFreq2 = addInputField(this.modSpecificDiv,   "Frequency 2 (Hz)", "446018750");
-            this.inputFreq3 = addInputField(this.modSpecificDiv,   "Frequency 3 (Hz)", "446031250");
-            this.inputFreq4 = addInputField(this.modSpecificDiv,   "Frequency 4 (Hz)", "446043750");
-            this.inputFreq5 = addInputField(this.modSpecificDiv,   "Frequency 5 (Hz)", "446056250");
-            this.inputFreq6 = addInputField(this.modSpecificDiv,   "Frequency 6 (Hz)", "446068750");
-            this.inputFreq7 = addInputField(this.modSpecificDiv,   "Frequency 7 (Hz)", "446081250");
-            this.inputFreq8 = addInputField(this.modSpecificDiv,   "Frequency 8 (Hz)", "446093750");
-            this.inputFreq9 = addInputField(this.modSpecificDiv,   "Frequency 9 (Hz)", "446106250");
-            this.inputFreq10 = addInputField(this.modSpecificDiv,  "Frequency 10 (Hz)", "446118750");
-        }
-        apply(firmwareData) {
-            const offset = 0xE0D8;
-            const freqs = [
-                Math.trunc(parseInt(this.inputFreq1.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq2.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq3.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq4.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq5.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq6.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq7.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq8.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq9.value) * 0.1),
-                Math.trunc(parseInt(this.inputFreq10.value) * 0.1)
-            ];
-            const buffer = new ArrayBuffer(40);
-            const dataView = new DataView(buffer);
-            for (let i = 0; i < freqs.length; i++) {
-                dataView.setUint32(i * 4, freqs[i], true); // true indicates little-endian byte order
-            }
-            const freqsHex = new Uint8Array(buffer);
-            firmwareData = replaceSection(firmwareData, freqsHex, offset);
-            log(`Success: ${this.name} applied.`);
-            return firmwareData;
-        }
-    }
-    ,
+    ,    
 ]
