@@ -226,6 +226,58 @@ modClasses = [
         }
     }
     ,
+    class Mod_CustomFm_radio extends FirmwareMod {
+        constructor() {
+            super("FM Radio Frequencies", "Changes the FM radio frequency range", "0");
+
+            this.select6476mhz = addRadioButton(this.modSpecificDiv, "64 - 76 MHz", "select6476mhz", "selectFm_radio");
+            this.select64108mhz = addRadioButton(this.modSpecificDiv, "64 - 108 MHz", "select64108mhz", "selectFm_radio");
+            this.select76108mhz = addRadioButton(this.modSpecificDiv, "76 - 108 MHz", "select76108mhz", "selectFm_radio");
+            this.select87108mhz = addRadioButton(this.modSpecificDiv, "86.4 - 108 MHz", "select87108mhz", "selectFm_radio");
+            this.select88108mhz = addRadioButton(this.modSpecificDiv, "88 - 108 MHz", "select88108mhz", "selectFm_radio");
+
+            this.select87108mhz.checked = true;
+        }
+
+        apply(firmwareData) {
+            if (this.select76108mhz.checked) {
+                firmwareData = replaceSection(firmwareData, hexString("5f0a0000"), 0xa274);
+                firmwareData = replaceSection(firmwareData, hexString("5f20c000"), 0xa2f4);
+                firmwareData = replaceSection(firmwareData, hexString("5f20c000"), 0x6452);
+                firmwareData = replaceSection(firmwareData, hexString("8721"), 0x6456);
+            }
+            else if (this.select64108mhz.checked) {
+                firmwareData = replaceSection(firmwareData, hexString("5f0a0000"), 0xa274);
+                firmwareData = replaceSection(firmwareData, hexString("5020c000"), 0x6452);
+            }
+            else if (this.select6476mhz.checked) {
+                const Reg05 = hexString("df0a0000");
+                const MOVSR0 = hexString("5020c000");
+                const MOVSR1 = hexString("5f21");
+
+                firmwareData = replaceSection(firmwareData, MOVSR0, 0xa2f4);
+                firmwareData = replaceSection(firmwareData, Reg05, 0xa274);
+                firmwareData = replaceSection(firmwareData, MOVSR0, 0x6452);
+                firmwareData = replaceSection(firmwareData, MOVSR1, 0x6456);
+            }
+            if (this.select87108mhz.checked) {
+                const Reg05 = hexString("5f0a0000");
+                const MOVSR0 = hexString("6c20c000");
+                firmwareData = replaceSection(firmwareData, Reg05, 0xa274);
+                firmwareData = replaceSection(firmwareData, MOVSR0, 0x6452);
+            }
+            else if (this.select88108mhz.checked) {
+                const Reg05 = hexString("5f0a0000");
+                const MOVSR0 = hexString("6e20c000");
+                firmwareData = replaceSection(firmwareData, Reg05, 0xa274);
+                firmwareData = replaceSection(firmwareData, MOVSR0, 0x6452);
+            }
+            log(`Success: ${this.name} applied.`);
+            return firmwareData;
+
+        }
+    }
+    ,
     class Mod_MicGain extends FirmwareMod {
         constructor() {
             super("Increase Mic sensitivity Gain", "makes the microphone more sensitive. You can hold it more far away to speak but background sound will be also louder. It does not gain the maximum mic volume. You can still fine tune the mic gain in the menu but it will always increase the sensitivity as without this mod.", 0);
