@@ -38,11 +38,12 @@ The supported format for binary data is in the format of a hex string __without 
 
 You may try one of these Java to exe convertors, compiling a java program into an executable. AutoIt and other scripting tools etc.. Most patches are also in [Python](https://github.com/amnemonic/Quansheng_UV-K5_Firmware/tree/main/uvmod_kitchen) available  to create an offline application.
 
-## **Comming soon** 
-Offline universal firmware version patcher
-based on search and replace pattern to change and modificate with precission the functions of these patches direct on all firmware versions and upcoming versions files.<br>
+## **Disclaimer** 
+This project was created for research and amateur radio use only, we are not responsible for improper use of this code which might lead to unauthorized transmission, reception or any patent infringments.
 
-## Credits, rules and trouble maker...
-"I'll take in account an EU Country block on a new DNS domain cause of different law regulations in whosmatt location. Threatens me with reference to DCMA is a taboo that's absolutely frowned upon among open source coding communities. A No-Go by doing shared code works. Sadly to be afraid from TX mods and freq limits >999MHz, 4 freq digits in MHz range will never match on the LCD screen, not to talk about changing the way how the direct keypad input should be changed to accept numbers higher than 999.999,(99). However he's desided to use my TX unlock code and maybe sooner or later my Tunnas1337 diffs done for TX and RX from 18-1300MHz Mod without paying propper credits back."
+The firmware produced with this website is released WITHOUT ANY WARRANTY: Anyone flashing a modified firmware binary image obtained from the sources made available through this repository and website configurator does so at their own risk. We always test all the code on our devices before publishing it on the repository, however we cannot guarantee the absolute absence of bugs nor of potential side effects. Mods flagged with Experimental are not fully tested.
+
+## Credits, rules and whats behind...
+"I'll take in account an EU Country block on a new DNS domain cause of different law regulations in whosmatt location. Threatens me with reference to DCMA is a taboo that's absolutely frowned upon among open source coding communities. A No-Go by doing shared code works. Sadly to be afraid from TX mods and freq limits >999MHz, 4 freq digits in MHz range will never match on the LCD screen, not to talk about changing the way how the direct keypad input should be changed to accept direkt input of larger numbers higher than 999.999,(99). However he's desided to use my TX unlock code and begun to make TX related mods now too just with a button click to unhide these features in meaning some fancy css, red color and maybe a lot warnings could prevent any unautorizated use of it. Its great that I could push on this way the initial main project a bit toward TX mods but bad for me since there are warnings published for visitors preventing using my version only because of different view points how warnings have to be expressed. So sad...
 
 *Credits and thanks to whosmatt!*
